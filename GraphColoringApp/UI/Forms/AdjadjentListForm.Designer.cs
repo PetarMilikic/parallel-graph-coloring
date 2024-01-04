@@ -45,7 +45,7 @@
             tlpMain.RowCount = 1;
             tlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tlpMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tlpMain.Size = new Size(800, 450);
+            tlpMain.Size = new Size(1056, 523);
             tlpMain.TabIndex = 0;
             // 
             // lbAdjList
@@ -55,17 +55,17 @@
             lbAdjList.ItemHeight = 20;
             lbAdjList.Location = new Point(3, 3);
             lbAdjList.Name = "lbAdjList";
-            lbAdjList.Size = new Size(794, 444);
+            lbAdjList.Size = new Size(1050, 517);
             lbAdjList.TabIndex = 0;
             // 
             // AdjadjentListForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1056, 523);
             Controls.Add(tlpMain);
             Name = "AdjadjentListForm";
-            Text = "AdjadjentListForm";
+            Text = "Adjadjent List Form";
             tlpMain.ResumeLayout(false);
             ResumeLayout(false);
         }
