@@ -17,6 +17,7 @@ namespace UI
         private DateTime lastColoringTime;
         private TimeSpan lastColoringTimeSpan;
         private TimeSpan lastGenerationGraphTimeSpan;
+        private string messageQueue;
 
         internal MainForm()
         {
@@ -39,7 +40,7 @@ namespace UI
             string message = $"Random Graph last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
 
             if (this.lastColoringTime != DateTime.MinValue)
-                message += $", Coloring generated on: {this.lastColoringTime}, Used time: {this.lastColoringTimeSpan}, Used colors: {this.graph.Nodes.Select(node => node.Color).ToHashSet().Count}";
+                message += $", Coloring generated on: {this.lastColoringTime} with {((AlgorithmNode)this.cmbChooseAlgorithm.SelectedItem).Name} algorithm, Used time: {this.lastColoringTimeSpan}, Used colors: {this.graph.Nodes.Select(node => node.Color).ToHashSet().Count}";
 
             this.lblGraphInfo.Text = message;
         }
@@ -59,6 +60,8 @@ namespace UI
 
         private void btnStartColoring_Click(object sender, EventArgs e)
         {
+            this.graph.ResetNodeColors();
+
             AlgorithmType algorithmType = ((AlgorithmNode)this.cmbChooseAlgorithm.SelectedItem).AlgoritimType;
             var graphColoringProviderFactory = new GraphColoringProviderFactory();
             IGraphColoringProvider coloringProvider = graphColoringProviderFactory.Create(algorithmType);
@@ -70,6 +73,9 @@ namespace UI
 
             this.lastColoringTime = DateTime.Now;
             this.lastColoringTimeSpan = stopwatch.Elapsed;
+
+            this.messageQueue += $"\n--------------------------------------------------------------------------------\nColoring generated on: {this.lastColoringTime} with {((AlgorithmNode)this.cmbChooseAlgorithm.SelectedItem).Name} algorithm, Used time: {this.lastColoringTimeSpan}, Used colors: {this.graph.Nodes.Select(node => node.Color).ToHashSet().Count}";
+
             this.RefreshInfoLabel();
         }
 
@@ -99,6 +105,8 @@ namespace UI
             this.lastColoringTimeSpan = TimeSpan.Zero;
             this.lastColoringTime = DateTime.MinValue;
 
+            this.messageQueue = $"Random Graph last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
+
             this.RefreshInfoLabel();
         }
 
@@ -108,6 +116,33 @@ namespace UI
             {
                 form.ShowDialog();
             }
+        }
+
+        private void btnCheckColoring_Click(object sender, EventArgs e)
+        {
+            int conflicts = this.CalculateNumberOfColoringConflicts();
+
+            if (conflicts == 0)
+                MessageBox.Show("Coloring ended with no conflicts.", "Corectness Check Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show($"Coloring ended with {conflicts} conflicts.", "Corectness Check Result", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private int CalculateNumberOfColoringConflicts()
+        {
+            int numberOfConflicts = 0;
+
+            foreach (var node in this.graph.Nodes)
+                foreach (var neighbour in this.graph.AdjacencyList[node])
+                    if (node.Color == neighbour.Color)
+                        numberOfConflicts++;
+
+            return numberOfConflicts;
+        }
+
+        private void btnShowComparisonResult_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(this.messageQueue, "Comparison Result", MessageBoxButtons.OK);
         }
     }
 }

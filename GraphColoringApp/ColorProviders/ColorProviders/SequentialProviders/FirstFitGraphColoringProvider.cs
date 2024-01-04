@@ -1,36 +1,38 @@
 ﻿using ColorProviders.Interfaces;
+using ColorProviders.Utiliies;
 using CommonProject;
 using System.Drawing;
 
 namespace ColorProviders
 {
-    public class FirstFitGraphColoringProvider : IGraphSequentialColoringProvider
-    {   
+    internal sealed class FirstFitGraphColoringProvider : IGraphSequentialColoringProvider
+    {
+        private readonly List<Node> nodeOrder;
+        private readonly List<Color> colorOrder;
+
+        internal FirstFitGraphColoringProvider(List<Node> nodeOrder = null, List<Color> colorOrder = null)
+        {
+            this.nodeOrder = nodeOrder;
+            this.colorOrder = colorOrder;
+        }
+
         public void ProvideNodeColors(Graph graph)
         {
-            var colorOrder = new List<Color>();
-            var randomizer = new Random();
+            List<Color> colorOrder = this.GetColorOrder(graph.Size);
+            List<Node> nodeOrder = this.nodeOrder ?? graph.Nodes.ToList();
+            var nodeColorProvider = new FirstFitNodeColorProvider();
 
-            foreach (Node node in graph.Nodes)
-            {
-                HashSet<Color> colorMask = graph.AdjacencyList[node].Select(neighbour => neighbour.Color).Where(color => color != Color.Empty).ToHashSet();
-                bool colorFounded = false;
+            foreach (Node node in nodeOrder)
+                nodeColorProvider.ProvideNodeColor(graph, node, colorOrder);
+        }
 
-                foreach (Color color in colorOrder)
-                    if (!colorMask.Contains(color))
-                    {
-                        node.Color = color;
-                        colorFounded = true;
-                        break;
-                    }
+        private List<Color> GetColorOrder(int size)
+        {
+            if (this.colorOrder != null)
+                return this.colorOrder;
 
-                if (!colorFounded)
-                {
-                    Color newColor = Color.FromArgb(randomizer.Next(100, 255), randomizer.Next(255), randomizer.Next(255), randomizer.Next(255));
-                    node.Color = newColor;
-                    colorOrder.Add(newColor);
-                };
-            }
+            var randomColorProvider = new RandomColorProvider();
+            return randomColorProvider.ProvideRandomColorList(size);
         }
     }
 }

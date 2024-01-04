@@ -6,6 +6,7 @@ namespace CommonProject
     {
         private readonly int serialNumber;
         private Color color;
+        private int priority;
 
         public Node(int serialNumber, Color? color = null)
         {
@@ -24,6 +25,12 @@ namespace CommonProject
         {
             get { return this.color; }
             set { this.color = value; }
+        }
+
+        public int Priority
+        {
+            get { return this.priority; }
+            set { this.priority = value; }
         }
 
         #endregion

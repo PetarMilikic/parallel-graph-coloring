@@ -42,6 +42,8 @@
             btnStartColoring = new Button();
             btnVisualizeRezults = new Button();
             btnDisplayAdjList = new Button();
+            btnCheckColoring = new Button();
+            btnShowComparisonResult = new Button();
             pbLogo = new PictureBox();
             flpDownPanel = new FlowLayoutPanel();
             lblGraphInfo = new Label();
@@ -70,7 +72,7 @@
             tlpMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tlpMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tlpMain.Size = new Size(1091, 517);
+            tlpMain.Size = new Size(1228, 574);
             tlpMain.TabIndex = 0;
             // 
             // graphViewer
@@ -104,7 +106,7 @@
             graphViewer.SaveButtonVisible = true;
             graphViewer.SaveGraphButtonVisible = true;
             graphViewer.SaveInVectorFormatEnabled = true;
-            graphViewer.Size = new Size(785, 431);
+            graphViewer.Size = new Size(922, 488);
             graphViewer.TabIndex = 0;
             graphViewer.TightOffsetForRouting = 0.125D;
             graphViewer.ToolBarIsVisible = true;
@@ -125,7 +127,7 @@
             tlpControllOptions.Name = "tlpControllOptions";
             tlpControllOptions.RowCount = 1;
             tlpControllOptions.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tlpControllOptions.Size = new Size(785, 34);
+            tlpControllOptions.Size = new Size(922, 34);
             tlpControllOptions.TabIndex = 1;
             // 
             // flpControlsLeft
@@ -139,7 +141,7 @@
             flpControlsLeft.Dock = DockStyle.Fill;
             flpControlsLeft.Location = new Point(3, 3);
             flpControlsLeft.Name = "flpControlsLeft";
-            flpControlsLeft.Size = new Size(779, 34);
+            flpControlsLeft.Size = new Size(916, 34);
             flpControlsLeft.TabIndex = 0;
             // 
             // lblGraphSize
@@ -176,7 +178,7 @@
             cmbChooseAlgorithm.FormattingEnabled = true;
             cmbChooseAlgorithm.Location = new Point(482, 3);
             cmbChooseAlgorithm.Name = "cmbChooseAlgorithm";
-            cmbChooseAlgorithm.Size = new Size(264, 28);
+            cmbChooseAlgorithm.Size = new Size(336, 28);
             cmbChooseAlgorithm.TabIndex = 4;
             // 
             // tlpControlsLeft
@@ -188,16 +190,21 @@
             tlpControlsLeft.Controls.Add(btnStartColoring, 0, 1);
             tlpControlsLeft.Controls.Add(btnVisualizeRezults, 0, 2);
             tlpControlsLeft.Controls.Add(btnDisplayAdjList, 0, 3);
+            tlpControlsLeft.Controls.Add(btnCheckColoring, 0, 4);
+            tlpControlsLeft.Controls.Add(btnShowComparisonResult, 0, 6);
             tlpControlsLeft.Dock = DockStyle.Fill;
             tlpControlsLeft.Location = new Point(3, 43);
             tlpControlsLeft.Name = "tlpControlsLeft";
-            tlpControlsLeft.RowCount = 5;
+            tlpControlsLeft.RowCount = 7;
             tlpControlsLeft.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tlpControlsLeft.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tlpControlsLeft.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tlpControlsLeft.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tlpControlsLeft.RowStyles.Add(new RowStyle());
-            tlpControlsLeft.Size = new Size(294, 431);
+            tlpControlsLeft.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tlpControlsLeft.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpControlsLeft.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tlpControlsLeft.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tlpControlsLeft.Size = new Size(294, 488);
             tlpControlsLeft.TabIndex = 2;
             // 
             // btnGenerateRandomGraph
@@ -244,6 +251,28 @@
             btnDisplayAdjList.UseVisualStyleBackColor = true;
             btnDisplayAdjList.Click += btnDisplayAdjList_Click;
             // 
+            // btnCheckColoring
+            // 
+            btnCheckColoring.Dock = DockStyle.Fill;
+            btnCheckColoring.Location = new Point(3, 163);
+            btnCheckColoring.Name = "btnCheckColoring";
+            btnCheckColoring.Size = new Size(288, 34);
+            btnCheckColoring.TabIndex = 4;
+            btnCheckColoring.Text = "Check Coloring Correctness ";
+            btnCheckColoring.UseVisualStyleBackColor = true;
+            btnCheckColoring.Click += btnCheckColoring_Click;
+            // 
+            // btnShowComparisonResult
+            // 
+            btnShowComparisonResult.Dock = DockStyle.Fill;
+            btnShowComparisonResult.Location = new Point(3, 451);
+            btnShowComparisonResult.Name = "btnShowComparisonResult";
+            btnShowComparisonResult.Size = new Size(288, 34);
+            btnShowComparisonResult.TabIndex = 6;
+            btnShowComparisonResult.Text = "Show Comparison Result";
+            btnShowComparisonResult.UseVisualStyleBackColor = true;
+            btnShowComparisonResult.Click += btnShowComparisonResult_Click;
+            // 
             // pbLogo
             // 
             pbLogo.Dock = DockStyle.Fill;
@@ -259,9 +288,9 @@
             tlpMain.SetColumnSpan(flpDownPanel, 2);
             flpDownPanel.Controls.Add(lblGraphInfo);
             flpDownPanel.Dock = DockStyle.Fill;
-            flpDownPanel.Location = new Point(3, 480);
+            flpDownPanel.Location = new Point(3, 537);
             flpDownPanel.Name = "flpDownPanel";
-            flpDownPanel.Size = new Size(1085, 34);
+            flpDownPanel.Size = new Size(1222, 34);
             flpDownPanel.TabIndex = 4;
             // 
             // lblGraphInfo
@@ -277,7 +306,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1091, 517);
+            ClientSize = new Size(1228, 574);
             Controls.Add(tlpMain);
             Name = "MainForm";
             ShowIcon = false;
@@ -312,5 +341,7 @@
         private FlowLayoutPanel flpDownPanel;
         private Label lblGraphInfo;
         private Button btnDisplayAdjList;
+        private Button btnCheckColoring;
+        private Button btnShowComparisonResult;
     }
 }

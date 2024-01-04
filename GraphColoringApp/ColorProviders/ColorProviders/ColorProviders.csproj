@@ -10,8 +10,4 @@
     <ProjectReference Include="..\..\Common\CommonProject\CommonProject.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ParallelProviders\" />
-  </ItemGroup>
-
 </Project>
