@@ -23,12 +23,21 @@ namespace ColorProviders.Utiliies
 
         internal List<Color> ProvideRandomColorList(int size)
         {
-            var colorList = new List<Color>(size);
+            HashSet<Color> colorSet = this.ProvideRandomColorSet(size);
+            return colorSet.ToList();
+        }
+
+        internal HashSet<Color> ProvideRandomColorSet(int size)
+        {
+            var colorSet = new HashSet<Color>(size);
 
             for (int i = 0; i < size; i++)
-                colorList.Add(this.ProvideRandomColor());
+                colorSet.Add(this.ProvideRandomColor());
 
-            return colorList;
+            while (colorSet.Count != size)
+                colorSet.Add(this.ProvideRandomColor());
+
+            return colorSet;
         }
     }
 }

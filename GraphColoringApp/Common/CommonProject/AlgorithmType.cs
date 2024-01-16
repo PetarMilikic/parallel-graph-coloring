@@ -9,7 +9,7 @@
         IndependentSetBasedSequential = 4,
         FirstFitModifiedSequential = 5,
         GMParallel = 6,
-        JonnesPlassmanParallel = 7,
+        JonnesPlassmanLDFParallel = 7,
         LubyMISParallel = 8,
         BlockPartitioningBasicParallel = 9,
         AdvancedBlockPartitioningParallel = 10

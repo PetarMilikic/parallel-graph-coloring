@@ -36,7 +36,20 @@ namespace ColorProviders.Utiliies
 
                 Parallel.ForEach(currentGraph.Nodes, this.parallelOptions, node =>
                 {
-                    if (currentGraph.AdjacencyList[node].All(neighbour => neighbour.Priority <= node.Priority))
+                    int nodeDegree = currentGraph.GetNodeDegree(node);
+                    bool addNode = true;
+
+                    foreach (Node neighbour in currentGraph.GetNodeNeighbours(node))
+                    {
+                        int neigbourDegree = currentGraph.GetNodeDegree(neighbour);
+                        if (nodeDegree > neigbourDegree || nodeDegree == neigbourDegree && node.Priority < neighbour.Priority)
+                        {
+                            addNode = false;
+                            break;
+                        }
+                    }
+
+                    if (addNode)
                         lock (lockObject)
                         {
                             currentSet.Add(node);

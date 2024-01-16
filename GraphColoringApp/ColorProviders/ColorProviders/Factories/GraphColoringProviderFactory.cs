@@ -23,8 +23,8 @@ namespace ColorProviders.Factories
                     return new FirstFitModifiedGraphColoringProvider();
                 case AlgorithmType.GMParallel:
                     return new GMGraphColoringProvider();
-                case AlgorithmType.JonnesPlassmanParallel:
-                    return new JPColorProvider();
+                case AlgorithmType.JonnesPlassmanLDFParallel:
+                    return new JonesPlassmanLDFColorProvider();
                 case AlgorithmType.LubyMISParallel:
                     return new LubyMISParallelColoringProvider();
                 case AlgorithmType.BlockPartitioningBasicParallel:
