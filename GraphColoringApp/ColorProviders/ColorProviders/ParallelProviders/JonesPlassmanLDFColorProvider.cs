@@ -6,11 +6,11 @@ using System.Drawing;
 
 namespace ColorProviders
 {
-    internal sealed class JPColorProvider : IGraphParallelColoringProvider
+    internal sealed class JonesPlassmanLDFColorProvider : IGraphParallelColoringProvider
     {
         private readonly object lockObject;
         private readonly ParallelOptions parallelOptions;
-        public JPColorProvider()
+        public JonesPlassmanLDFColorProvider()
         {
             this.lockObject = new object();
 
@@ -30,10 +30,22 @@ namespace ColorProviders
             while (currentGraph.AdjacencyList.Count > 0) 
             {
                 var independentSet = new HashSet<Node>();
-
                 Parallel.ForEach(currentGraph.Nodes, this.parallelOptions, node =>
                 {
-                    if (currentGraph.AdjacencyList[node].All(neighbour => neighbour.Priority <= node.Priority))
+                    int nodeDegree = currentGraph.GetNodeDegree(node);
+                    bool addNode = true;
+
+                    foreach (Node neighbour in currentGraph.GetNodeNeighbours(node))
+                    {
+                        int neigbourDegree = currentGraph.GetNodeDegree(neighbour);
+                        if (nodeDegree <  neigbourDegree || nodeDegree == neigbourDegree && node.Priority < neighbour.Priority)
+                        {
+                            addNode = false;
+                            break;
+                        }
+                    }
+
+                    if (addNode)
                         lock (lockObject)
                         {
                             independentSet.Add(node);
@@ -70,7 +82,7 @@ namespace ColorProviders
             Parallel.ForEach(graph.Nodes, this.parallelOptions, node => 
             {
                 Random randomizer = new Random();
-                node.Priority = randomizer.Next(uppeIntervalBound); 
+                node.Priority = randomizer.Next(uppeIntervalBound);
             });
         }
     }

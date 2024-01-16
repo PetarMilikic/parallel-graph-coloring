@@ -20,8 +20,8 @@
                     return "First Fit Modified [Sequential]";
                 case AlgorithmType.GMParallel:
                     return "GM [Parallel]";
-                case AlgorithmType.JonnesPlassmanParallel:
-                    return "Jonnes Plassman [Prallel]";
+                case AlgorithmType.JonnesPlassmanLDFParallel:
+                    return "Jonnes Plassman LDF [Prallel]";
                 case AlgorithmType.LubyMISParallel:
                     return "Luby MIS [Parallel]";
                 case AlgorithmType.BlockPartitioningBasicParallel:

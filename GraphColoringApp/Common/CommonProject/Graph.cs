@@ -44,6 +44,11 @@ namespace CommonProject
 
         #endregion
 
+        public IEnumerable<Node> GetNodeNeighbours(Node node)
+        {
+            return this.adjacencyList[node];
+        }
+
         public Graph GetCopy()
         {
             var newAdjacencyList = new ConcurrentDictionary<Node, HashSet<Node>>(this.adjacencyList.ToDictionary(kvp => kvp.Key, kvp => new HashSet<Node>(kvp.Value)));

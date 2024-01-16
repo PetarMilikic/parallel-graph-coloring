@@ -17,11 +17,12 @@ namespace UI
         private DateTime lastColoringTime;
         private TimeSpan lastColoringTimeSpan;
         private TimeSpan lastGenerationGraphTimeSpan;
-        private string messageQueue;
+        private List<string> algorithmInfoList;
 
         internal MainForm()
         {
             this.InitializeComponent();
+            this.algorithmInfoList = new List<string>();
             this.graph = new Graph(0);
             this.lastColoringTimeSpan = TimeSpan.Zero;
             this.lastColoringTime = DateTime.MinValue;
@@ -37,7 +38,7 @@ namespace UI
 
         private void RefreshInfoLabel()
         {
-            string message = $"Random Graph last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
+            string message = $"Random Graph with {this.graph.Size} nodes last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
 
             if (this.lastColoringTime != DateTime.MinValue)
                 message += $", Coloring generated on: {this.lastColoringTime} with {((AlgorithmNode)this.cmbChooseAlgorithm.SelectedItem).Name} algorithm, Used time: {this.lastColoringTimeSpan}, Used colors: {this.graph.Nodes.Select(node => node.Color).ToHashSet().Count}";
@@ -74,7 +75,7 @@ namespace UI
             this.lastColoringTime = DateTime.Now;
             this.lastColoringTimeSpan = stopwatch.Elapsed;
 
-            this.messageQueue += $"\n--------------------------------------------------------------------------------\nColoring generated on: {this.lastColoringTime} with {((AlgorithmNode)this.cmbChooseAlgorithm.SelectedItem).Name} algorithm, Used time: {this.lastColoringTimeSpan}, Used colors: {this.graph.Nodes.Select(node => node.Color).ToHashSet().Count}";
+            this.algorithmInfoList.Add($"Coloring generated on: { this.lastColoringTime} with { ((AlgorithmNode)this.cmbChooseAlgorithm.SelectedItem).Name} algorithm, Used time: { this.lastColoringTimeSpan.TotalSeconds} , Used colors: { this.graph.Nodes.Select(node => node.Color).ToHashSet().Count}");
 
             this.RefreshInfoLabel();
         }
@@ -95,6 +96,8 @@ namespace UI
                 return;
             }
 
+            this.algorithmInfoList.Clear();
+
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             this.GenerateRandomGraph(randomGraphSize);
@@ -104,9 +107,6 @@ namespace UI
             this.lastGeneratedGraphTime = DateTime.Now;
             this.lastColoringTimeSpan = TimeSpan.Zero;
             this.lastColoringTime = DateTime.MinValue;
-
-            this.messageQueue = $"Random Graph last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
-
             this.RefreshInfoLabel();
         }
 
@@ -142,7 +142,12 @@ namespace UI
 
         private void btnShowComparisonResult_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(this.messageQueue, "Comparison Result", MessageBoxButtons.OK);
+            string graphGenerationInfo = $"Random Graph with {this.graph.Size} last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
+
+            using(var comparisonForm = new AlgorithmComparisonForm(graphGenerationInfo, this.algorithmInfoList))
+            {
+                comparisonForm.ShowDialog();
+            }
         }
     }
 }
