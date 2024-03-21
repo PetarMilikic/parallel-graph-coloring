@@ -38,7 +38,7 @@ namespace UI
 
         private void RefreshInfoLabel()
         {
-            string message = $"Random Graph with {this.graph.Size} nodes last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
+            string message = $"Random Graph with {this.graph.Size} nodes (with maximal node degree: {this.graph.MaximalNodeDegree}) last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
 
             if (this.lastColoringTime != DateTime.MinValue)
                 message += $", Coloring generated on: {this.lastColoringTime} with {((AlgorithmNode)this.cmbChooseAlgorithm.SelectedItem).Name} algorithm, Used time: {this.lastColoringTimeSpan}, Used colors: {this.graph.Nodes.Select(node => node.Color).ToHashSet().Count}";
@@ -75,7 +75,7 @@ namespace UI
             this.lastColoringTime = DateTime.Now;
             this.lastColoringTimeSpan = stopwatch.Elapsed;
 
-            this.algorithmInfoList.Add($"Coloring generated on: { this.lastColoringTime} with { ((AlgorithmNode)this.cmbChooseAlgorithm.SelectedItem).Name} algorithm, Used time: { this.lastColoringTimeSpan.TotalSeconds} , Used colors: { this.graph.Nodes.Select(node => node.Color).ToHashSet().Count}");
+            this.algorithmInfoList.Add($"Coloring generated on: {this.lastColoringTime} with {((AlgorithmNode)this.cmbChooseAlgorithm.SelectedItem).Name} algorithm, Used time: {this.lastColoringTimeSpan.TotalSeconds} , Used colors: {this.graph.Nodes.Select(node => node.Color).ToHashSet().Count}");
 
             this.RefreshInfoLabel();
         }
@@ -123,9 +123,9 @@ namespace UI
             int conflicts = this.CalculateNumberOfColoringConflicts();
 
             if (conflicts == 0)
-                MessageBox.Show("Coloring ended with no conflicts.", "Corectness Check Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Coloring ended with no conflicts.", "Correctness Check Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                MessageBox.Show($"Coloring ended with {conflicts} conflicts.", "Corectness Check Result", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Coloring ended with {conflicts} conflicts.", "Correctness Check Result", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private int CalculateNumberOfColoringConflicts()
@@ -137,14 +137,14 @@ namespace UI
                     if (node.Color == neighbour.Color)
                         numberOfConflicts++;
 
-            return numberOfConflicts;
+            return numberOfConflicts / 2;
         }
 
         private void btnShowComparisonResult_Click(object sender, EventArgs e)
         {
-            string graphGenerationInfo = $"Random Graph with {this.graph.Size} last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
+            string graphGenerationInfo = $"Random Graph with {this.graph.Size} nodes (with maximal node degree: {this.graph.MaximalNodeDegree}) last generated on {this.lastGeneratedGraphTime}, Used time: {this.lastGenerationGraphTimeSpan}";
 
-            using(var comparisonForm = new AlgorithmComparisonForm(graphGenerationInfo, this.algorithmInfoList))
+            using (var comparisonForm = new AlgorithmComparisonForm(graphGenerationInfo, this.algorithmInfoList))
             {
                 comparisonForm.ShowDialog();
             }

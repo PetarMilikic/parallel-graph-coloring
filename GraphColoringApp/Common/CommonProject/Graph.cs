@@ -42,6 +42,11 @@ namespace CommonProject
             get { return this.Nodes.Select(node => node.Color).ToHashSet(); }
         }
 
+        public int MaximalNodeDegree
+        {
+            get { return this.Nodes.Max(node => this.GetNodeDegree(node)); }
+        }
+
         #endregion
 
         public IEnumerable<Node> GetNodeNeighbours(Node node)
@@ -65,7 +70,7 @@ namespace CommonProject
             return this.adjacencyList[node].Select(neighbour => neighbour.Color).Where(color => color != Color.Empty).ToHashSet();
         }
 
-        public void ResetNodeColors() //TODO: Remove this
+        public void ResetNodeColors()
         {
             Parallel.ForEach(this.vertices,
                 node => node.Color = Color.Empty);

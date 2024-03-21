@@ -109,7 +109,7 @@
             graphViewer.Size = new Size(922, 488);
             graphViewer.TabIndex = 0;
             graphViewer.TightOffsetForRouting = 0.125D;
-            graphViewer.ToolBarIsVisible = true;
+            graphViewer.ToolBarIsVisible = false;
             graphViewer.Transform = (Microsoft.Msagl.Core.Geometry.Curves.PlaneTransformation)resources.GetObject("graphViewer.Transform");
             graphViewer.UndoRedoButtonsVisible = true;
             graphViewer.WindowZoomButtonPressed = false;

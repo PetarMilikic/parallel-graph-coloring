@@ -1,7 +1,6 @@
 ﻿using ColorProviders.Interfaces;
 using ColorProviders.Utiliies;
 using CommonProject;
-using System.Collections.Concurrent;
 using System.Drawing;
 
 namespace ColorProviders
