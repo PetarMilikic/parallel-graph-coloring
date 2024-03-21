@@ -18,9 +18,9 @@ namespace ColorProviders.Factories
                 case AlgorithmType.SDOSequential:
                     return new SDOGraphColoringProvider();
                 case AlgorithmType.IndependentSetBasedSequential:
-                    return new IndependentSetGraphColoringProvider();
+                    return new MaximalIndependentSetGraphColoringProvider();
                 case AlgorithmType.FirstFitModifiedSequential:
-                    return new FirstFitModifiedGraphColoringProvider();
+                    return new FirstFitModifiedGraphColoringProvider(additionalNumberOfIterations: 3);
                 case AlgorithmType.GMParallel:
                     return new GMGraphColoringProvider();
                 case AlgorithmType.JonnesPlassmanLDFParallel:
@@ -28,7 +28,7 @@ namespace ColorProviders.Factories
                 case AlgorithmType.LubyMISParallel:
                     return new LubyMISParallelColoringProvider();
                 case AlgorithmType.BlockPartitioningBasicParallel:
-                    return new ColoringProviderWithBasicBlockPartitioning();
+                    return new BasicBlockPartitioningColorProvider();
                 case AlgorithmType.AdvancedBlockPartitioningParallel:
                     return new AdvancedBlockPartitioningColorProvider();
                 default:

@@ -45,13 +45,13 @@ namespace ColorProviders
 
             ConcurrentBag<Node> nodesToRecolor = this.GetConflictedNodes(graph, blocks);
             this.ResetNodeColors(nodesToRecolor);
-            var restColorNodesProvider = new FirstFitModifiedGraphColoringProvider(colorOrder,nodesToRecolor.ToList());
+            var restColorNodesProvider = new FirstFitModifiedGraphColoringProvider(colorOrder,nodesToRecolor.ToList(), 3);
             restColorNodesProvider.ProvideNodeColors(graph);
         }
 
         private ConcurrentBag<Node> GetConflictedNodes(Graph graph, ConcurrentDictionary<int, ConcurrentBag<Node>> nodeBlocksByIndex)
         {
-            ConcurrentBag<Node> nodesToRecolor = new ConcurrentBag<Node>(); //TODO: Try with HashSet with synchronization
+            ConcurrentBag<Node> nodesToRecolor = new ConcurrentBag<Node>();
             Parallel.ForEach(nodeBlocksByIndex, block =>
             {
                 foreach (Node node in block.Value)

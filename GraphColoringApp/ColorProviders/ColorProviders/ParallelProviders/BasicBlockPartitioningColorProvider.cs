@@ -3,7 +3,6 @@ using ColorProviders.Utiliies;
 using CommonProject;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ColorProviders
 {
-    internal sealed class ColoringProviderWithBasicBlockPartitioning : IGraphParallelColoringProvider
+    internal sealed class BasicBlockPartitioningColorProvider : IGraphParallelColoringProvider
     {
         public void ProvideNodeColors(Graph graph)
         {
@@ -37,7 +36,7 @@ namespace ColorProviders
 
         private ConcurrentBag<Node> GetCollisionNodes(Graph graph, ConcurrentDictionary<int, ConcurrentBag<Node>> nodeBlocksByIndex)
         {
-            ConcurrentBag<Node> nodesToRecolor = new ConcurrentBag<Node>(); //TODO: Try with HashSet with synchronization
+            ConcurrentBag<Node> nodesToRecolor = new ConcurrentBag<Node>();
             Parallel.ForEach(nodeBlocksByIndex, block =>
             {
                 foreach (Node node in block.Value)

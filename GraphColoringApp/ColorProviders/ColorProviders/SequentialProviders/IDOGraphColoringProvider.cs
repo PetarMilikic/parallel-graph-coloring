@@ -45,7 +45,7 @@ namespace ColorProviders
 
         private int CalculateIncidencyDegree(Node node, Graph graph, HashSet<Node> coloredNodes)
         {
-            return coloredNodes.Intersect(graph.AdjacencyList[node]).Count();
+            return coloredNodes.Intersect(graph.GetNodeNeighbours(node)).Count();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace ColorProviders
 {
-    internal sealed class IndependentSetGraphColoringProvider : IGraphSequentialColoringProvider
+    internal sealed class MaximalIndependentSetGraphColoringProvider : IGraphSequentialColoringProvider
     {
         public void ProvideNodeColors(Graph graph)
         {
